@@ -6,7 +6,7 @@
 
 ## Usage
 ```{R}
-biobricks::install_brick("echemportal")
+biobricks::brick_install("echemportal")
 biobricks::brick_pull("echemportal")
 biobricks::brick_load("echemportal")
 ```
