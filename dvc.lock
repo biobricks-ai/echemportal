@@ -4,5 +4,5 @@ stages:
     cmd: cp ../brick-builder/target/echemportal.parquet data
     outs:
     - path: data/echemportal.parquet
-      md5: e9cad102291d37eceeacc8566aa3e9cd
-      size: 4209898
+      md5: cf34a95cceb34bcea0fb1f0a33639821
+      size: 5375782
