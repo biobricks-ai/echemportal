@@ -6,3 +6,14 @@ stages:
     - path: data/echemportal.parquet
       md5: cf34a95cceb34bcea0fb1f0a33639821
       size: 5375782
+  crawl:
+    cmd: clj -X biobricks.echemportal/crawl-substances && mv target/echemportal data/crawl
+    deps:
+    - path: data/echemportal-version
+      md5: 2f22354908ab962744f9d773015b833f
+      size: 42
+    outs:
+    - path: data/crawl
+      md5: 1339a26c168e23a8fce812cc83ec1569.dir
+      size: 8991792
+      nfiles: 674

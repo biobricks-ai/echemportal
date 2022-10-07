@@ -1,7 +1,7 @@
-# example stages
-# see https://dvc.org/doc/user-guide/project-structure/dvcyaml-files#pipelines-files-dvcyaml
 stages:
-  echemportal:
-    cmd: cp ../brick-builder/target/echemportal.parquet data
+  crawl:
+    cmd: clj -X biobricks.echemportal/crawl-substances && mv target/echemportal data/crawl
+    deps:
+      - data/echemportal-version
     outs:
-      - data/echemportal.parquet
+      - data/crawl

@@ -1,0 +1,10 @@
+{:paths ["resources" "src"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        babashka/fs {:mvn/version "0.1.11"}
+        clj-http/clj-http {:mvn/version "3.12.3"}
+        clojure-csv/clojure-csv {:mvn/version "2.0.2"}
+        etaoin/etaoin {:mvn/version "1.0.38"}
+        hashp/hashp {:mvn/version "0.2.1"
+                     :exclusions [rewrite-cljs/rewrite-cljs]}
+        lambdaisland/uri {:mvn/version "1.13.95"}
+        org.clojure/data.json {:mvn/version "2.4.0"}}}
