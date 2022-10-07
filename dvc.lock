@@ -1,11 +1,5 @@
 schema: '2.0'
 stages:
-  echemportal:
-    cmd: cp ../brick-builder/target/echemportal.parquet data
-    outs:
-    - path: data/echemportal.parquet
-      md5: cf34a95cceb34bcea0fb1f0a33639821
-      size: 5375782
   crawl:
     cmd: clj -X biobricks.echemportal/crawl-substances && mv target/echemportal data/crawl
     deps:
@@ -17,3 +11,15 @@ stages:
       md5: 1339a26c168e23a8fce812cc83ec1569.dir
       size: 8991792
       nfiles: 674
+  to-parquet:
+    cmd: clj -X biobricks.echemportal/crawl-to-parquet '{:crawl-results "data/crawl"
+      :output "data/echemportal.parquet"}'
+    deps:
+    - path: data/crawl
+      md5: 1339a26c168e23a8fce812cc83ec1569.dir
+      size: 8991792
+      nfiles: 674
+    outs:
+    - path: data/echemportal.parquet
+      md5: cf34a95cceb34bcea0fb1f0a33639821
+      size: 5375782

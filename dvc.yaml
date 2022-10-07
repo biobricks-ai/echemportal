@@ -5,3 +5,9 @@ stages:
       - data/echemportal-version
     outs:
       - data/crawl
+  to-parquet:
+    cmd: clj -X biobricks.echemportal/crawl-to-parquet '{:crawl-results "data/crawl" :output "data/echemportal.parquet"}'
+    deps:
+      - data/crawl
+    outs:
+      - data/echemportal.parquet

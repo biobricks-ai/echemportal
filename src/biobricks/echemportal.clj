@@ -140,6 +140,21 @@
 
     :else row))
 
+;; Known bad lines and their legal replacements
+(def replacement-lines
+  {"\"Aldicarb degradate \"Aldicarb sulfone\"\",,1646-88-4,CAS Number,\"\",2,https://www.regulations.gov/document?D=EPA-HQ-OPP-2012-0161-0021,EPA OPPALB,,false"
+   "\"Aldicarb degradate \"\"Aldicarb sulfone\"\"\",,1646-88-4,CAS Number,\"\",2,https://www.regulations.gov/document?D=EPA-HQ-OPP-2012-0161-0021,EPA OPPALB,,false"})
+
+(defn load-crawl-csv [text]
+  (try
+    (-> text csv/parse-csv doall)
+    (catch Exception e
+      (->> (str/split text #"\n")
+           (map #(replacement-lines % %))
+           (str/join \newline)
+           csv/parse-csv
+           doall))))
+
 (defn collect-results [dir]
   (loop [[file & more] (fs/list-dir dir)
          results (transient #{})]
@@ -147,7 +162,7 @@
       (persistent! results)
       (let [text (-> file fs/file slurp)
             [header & rows] (try
-                              (-> text csv/parse-csv doall)
+                              (load-crawl-csv text)
                               (catch Exception e
                                 (throw (ex-info (str "Error parsing " file ": " (ex-message e))
                                                 {:cause e
@@ -186,10 +201,16 @@
       (fs/move parquet file {:replace-existing true})))
   file)
 
+(defn crawl-to-parquet [{:keys [crawl-results output]}]
+  (->> (fs/path crawl-results)
+       collect-results
+       (write-parquet (fs/path output))))
+
 (comment
   (do
     (def results (collect-results (fs/path "target" "echemportal")))
     (count results))
   (write-csv (fs/path "target" "echemportal.csv") results)
   (write-parquet (fs/path "target" "echemportal.parquet") results)
-  )
+  (crawl-to-parquet {:crawl-results "target/echemportal"
+                     :output "target/echemportal.parquet"}))
