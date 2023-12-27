@@ -13,13 +13,15 @@ stages:
       nfiles: 674
   to-parquet:
     cmd: clj -X biobricks.echemportal/crawl-to-parquet '{:crawl-results "data/crawl"
-      :output "data/echemportal.parquet"}'
+      :output "brick/echemportal.parquet"}'
     deps:
     - path: data/crawl
       md5: 1339a26c168e23a8fce812cc83ec1569.dir
       size: 8991792
       nfiles: 674
     outs:
-    - path: data/echemportal.parquet
-      md5: cf34a95cceb34bcea0fb1f0a33639821
-      size: 5375782
+    - path: brick
+      hash: md5
+      md5: 7ef03505d2a459d3e3f9a2af5e25a643.dir
+      size: 5376152
+      nfiles: 1
