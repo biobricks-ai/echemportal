@@ -198,6 +198,7 @@
           parquet (fs/path dir "echemportal.parquet")]
       (write-csv csv results)
       (sh/sh "csv2parquet" (str csv) (str parquet))
+      (fs/create-dirs (fs/parent file))
       (fs/move parquet file {:replace-existing true})))
   file)
 
