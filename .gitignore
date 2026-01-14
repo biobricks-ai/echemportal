@@ -1,5 +1,7 @@
-.*
-logs
+/brick
 /download
 /temp
-/brick
+/.venv
+__pycache__/
+*.pyc
+logs

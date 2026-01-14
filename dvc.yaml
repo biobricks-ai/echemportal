@@ -1,13 +1,15 @@
 stages:
   crawl:
-    cmd: clj -X biobricks.echemportal/crawl-substances && mv target/echemportal data/crawl
+    cmd: python3 stages/01_crawl.py
     deps:
+      - stages/01_crawl.py
       - data/echemportal-version
     outs:
-      - data/crawl
-  to-parquet:
-    cmd: clj -X biobricks.echemportal/crawl-to-parquet '{:crawl-results "data/crawl" :output "brick/echemportal.parquet"}'
+      - download/crawl
+  build:
+    cmd: python3 stages/02_build.py
     deps:
-      - data/crawl
+      - stages/02_build.py
+      - download/crawl
     outs:
       - brick
