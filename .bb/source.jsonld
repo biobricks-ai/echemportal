@@ -1,0 +1,49 @@
+{
+  "@context": "../../context/source.context.jsonld",
+  "@type": "dcat:Dataset",
+  "@id": "https://biobricks.ai/bricks/echemportal",
+  "dcterms:title": "OECD eChemPortal \u2014 Global Portal to Information on Chemical Substances (substance search results)",
+  "dcterms:description": "Substance-level search results harvested from OECD eChemPortal (www.echemportal.org), the Global Portal to Information on Chemical Substances. The crawler (src/biobricks/echemportal.clj) drives the eChemPortal substance-search UI with CAS-number wildcards and exports the CSV result tables. eChemPortal is an aggregation/search layer over ~35 external regulatory databases (ECHA REACH, EPA CompTox, Health Canada CCR, OECD SIDS, J-CHECK, etc.), each of which owns its own data under its own terms.",
+  "dcterms:license": {
+    "@id": "https://www.echemportal.org/echemportal/page/legalNotice",
+    "dcterms:title": "UNSTATED / no open reuse grant located \u2014 eChemPortal aggregates ~35 third-party regulatory databases, each owning its data under its own terms; a separate per-source license would be required."
+  },
+  "biobricks:licenseName": "Undetermined \u2014 OECD portal aggregating third-party data; no reuse grant located",
+  "biobricks:licenseClass": "unknown",
+  "biobricks:merckCommercialUse": "prohibited",
+  "biobricks:licenseEvidence": [
+    {
+      "source": "src/biobricks/echemportal.clj",
+      "quote": "(def substance-search-uri \"https://www.echemportal.org/echemportal/substance-search\") ... (defn crawl-substances ... (doseq [i (range 10 999)] ... (substance-search-results dir (str i ...)))",
+      "confidence": "high"
+    },
+    {
+      "source": "README.md",
+      "quote": "This repository documents the data sources aggregated by OECD eChemPortal, the global portal to information on chemical substances. Note: Rather than scraping eChemPortal's search interface, we recommend building bricks directly from the individual source databases listed below, as they contain the actual data.",
+      "confidence": "high"
+    },
+    {
+      "source": "https://www.echemportal.org/echemportal/page/legalNotice (SPA; automated fetch returned only the app shell, terms text not retrievable)",
+      "quote": "eChemPortal legal notice / terms of use could not be retrieved by automated fetch; no open reuse or redistribution grant was located, and the underlying data belongs to the individual participating organisations.",
+      "confidence": "low"
+    }
+  ],
+  "biobricks:reviewed": false,
+  "biobricks:reviewNotes": "Determined by the BioBricks licensing-annotation agent (slice items[498:504]). The brick harvests search results from OECD eChemPortal by scripting its substance-search UI and exporting CSVs. eChemPortal is a search/aggregation portal, not a data owner: it federates ~35 third-party regulatory databases, each with its own (and varying) terms, and even the repo's own README advises sourcing from the individual databases rather than scraping the portal. No open reuse/redistribution license for eChemPortal-served data could be located (the legal-notice page is a JavaScript SPA that did not yield its terms to automated fetch). Absent an explicit grant, and given the data is third-party-owned and would require separate per-source licenses, this is conservatively recorded as licenseClass 'unknown' (marker Lr) with commercial use 'prohibited' and dcterms:license unstated; substantively treat it as restricted (a separate per-source license would be required). HUMAN REVIEWER: confirm eChemPortal's terms of use / disclaimer directly at echemportal.org, and note that any redistribution would also need to respect each contributing database's own license (e.g. ECHA Legal Notice, EPA open data, Health Canada, OECD).",
+  "dcterms:creator": "OECD and participating national/regional chemical authorities",
+  "dcterms:publisher": "Organisation for Economic Co-operation and Development (OECD) \u2014 eChemPortal",
+  "dcterms:identifier": "https://www.echemportal.org/",
+  "prov:wasDerivedFrom": [
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://www.echemportal.org/echemportal/substance-search",
+      "dcterms:title": "OECD eChemPortal substance search (aggregated third-party regulatory data)",
+      "dcterms:license": {
+        "@id": "https://www.echemportal.org/echemportal/page/legalNotice",
+        "dcterms:title": "UNSTATED \u2014 no open reuse grant located; third-party-owned aggregated data"
+      },
+      "dcat:landingPage": "https://www.echemportal.org/",
+      "dcterms:publisher": "OECD eChemPortal"
+    }
+  ]
+}
